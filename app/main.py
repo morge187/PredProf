@@ -19,7 +19,6 @@ def create_app():
             admin = User(
                 email=settings.ADMIN_EMAIL,
                 passwordHash=hash_password(settings.ADMIN_PASSWORD),
-                fullName=settings.ADMIN_FULLNAME,
                 role="ADMIN",
                 isActive=True
             )
