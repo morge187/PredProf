@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 from database import init_db, get_db_session
@@ -8,6 +9,9 @@ from routes.main.main import main_page
 
 def create_app():
     app = Flask(__name__)
+
+    app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-secret-change-me")
+    app.config["WTF_CSRF_ENABLED"] = True
     
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     
