@@ -1,6 +1,6 @@
 from sqlalchemy import (
     Column, String, Integer, Boolean, DateTime, UUID,
-    ForeignKey, JSON, Numeric
+    ForeignKey, Numeric
 )
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -34,12 +34,72 @@ class StudentProfile(Base):
     __tablename__ = "student_profiles"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, unique=True)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, unique=True, index=True)
     class_name = Column(String(50), nullable=True)
-    allergies = Column(JSON, nullable=True)
-    preferences = Column(JSON, nullable=True)
 
     user = relationship("User", back_populates="student_profile")
+    allergies = relationship("Allergies", secondary="profile_allergies", back_populates="student_profiles")
+    preferences = relationship("Preferences", back_populates="student_profile", uselist=False)
+
+
+class Allergies(Base):
+    __tablename__ = "allergies"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    word = Column(String(100), nullable=False, unique=True, index=True)
+
+
+class ProfileAllergies(Base):
+    __tablename__ = "profile_allergies"
+
+    student_profile_id = Column(
+        UUID(as_uuid=True), 
+        ForeignKey("student_profiles.id"), 
+        primary_key=True
+    )
+    allergy_id = Column(
+        UUID(as_uuid=True), 
+        ForeignKey("allergies.id"), 
+        primary_key=True
+    )
+
+    # Связи
+    student_profile = relationship(
+        "StudentProfile", 
+        back_populates="profile_allergies"
+    )
+    allergy = relationship(
+        "Allergies", 
+        back_populates="profile_allergies"
+    )
+
+class DishAllergies(Base):
+    __tablename__ = "dish_allergies"
+
+    dish_id = Column(
+        UUID(as_uuid=True), 
+        ForeignKey("dishes.id"), 
+        primary_key=True
+    )
+    allergy_id = Column(
+        UUID(as_uuid=True), 
+        ForeignKey("allergies.id"), 
+        primary_key=True
+    )
+
+    # Связи
+    dish = relationship("Dish", back_populates="dish_allergies")
+    allergy = relationship("Allergies", back_populates="dish_allergies")
+
+
+class Preferences(Base):
+    __tablename__ = "preferences"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    profile_id = Column(UUID(as_uuid=True), ForeignKey("student_profiles.id"), nullable=False, unique=True)
+    word = Column(String(100), nullable=False)  # Fixed length for consistency
+
+    student_profile = relationship("StudentProfile", back_populates="preferences")
 
 
 class CookProfile(Base):
@@ -56,13 +116,15 @@ class Dish(Base):
     __tablename__ = "dishes"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
-    name = Column(String(200), nullable=False)
+    name = Column(String(200), nullable=False, index=True)
     description = Column(String(500), nullable=True)
-    dish_type = Column(String(20), nullable=False)   # Блюдо на завтрак или обед
+    dish_type = Column(String(20), nullable=False, index=True)  # breakfast/lunch
     price = Column(Numeric(10, 2), nullable=False)
     calories = Column(Integer, nullable=True)
-    allergens = Column(JSON, nullable=True)          # список аллергенов
-
+    
+    # Many-to-many with allergies (preferred over JSON for normalization)
+    allergies = relationship("Allergies", secondary="dish_allergies", back_populates="dishes")
+    
     menu_items = relationship("MenuItem", back_populates="dish")
     reviews = relationship("Review", back_populates="dish")
 
