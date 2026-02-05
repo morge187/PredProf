@@ -1,7 +1,8 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base, scoped_session
+from sqlalchemy.orm import sessionmaker, declarative_base
 from settings import settings
 from contextlib import contextmanager
+import os
 
 engine = create_engine(
     settings.DATABASE_URL,
@@ -9,23 +10,27 @@ engine = create_engine(
     pool_pre_ping=True
 )
 
-SessionLocal = scoped_session(sessionmaker(
+SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine
-))
+)
 
-# Create base class for models
 Base = declarative_base()
-
-def get_db():
-    try:
-        yield SessionLocal()
-    finally:
-        SessionLocal.remove()
 
 @contextmanager
 def get_db_session():
+    db = SessionLocal()
+    try:
+        yield db
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
+
+def get_db():
     db = SessionLocal()
     try:
         yield db

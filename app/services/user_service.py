@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from models import User, StudentProfile
 from auth import hash_password, verify_password
+from utils.error import UserError
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,7 @@ class UserService:
                 f"Attempt to create user with existing email: {user_data['email']}"
             )
             # Можно кидать свою ошибку или вернуть структуру под валидацию
-            return "Такой email уже существует", "email"
+            raise UserError(cause="Такой email уже существует", field="email")
 
         user = User(
             id=uuid.uuid4(),
@@ -53,7 +54,7 @@ class UserService:
         user = db.query(User).filter(User.id == user_id).first()
         if not user:
             logger.warning(f"User not found: {user_id}")
-            return f"Пользователя с id - {user_id} нет"
+            raise UserError(field="but", cause=f"Пользователь с таким id не найден")
 
         profile = (
             db.query(StudentProfile)
@@ -149,15 +150,15 @@ class UserService:
 
         if not user:
             logger.warning(f"Login attempt with non-existent email: {email}")
-            return "Пользователя не существует, надо зарегестрироваться"
+            raise UserError(cause="Пользователя не существует, надо зарегестрироваться", field="email")
 
         if not verify_password(password, user.passwordHash):
             logger.warning(f"Failed login attempt for user {user.id} ({email})")
-            return "Неверный пароль"
+            return UserError(cause="Неверный пароль", field="email")
 
         if not user.isActive:
             logger.warning(f"Login attempt for deactivated user {user.id} ({email})")
-            return "пользователь заблокирован"
+            return UserError(cause="пользователь заблокирован", field="email")
 
         logger.info(f"Successful login for user {user.id} ({email})")
         return user
