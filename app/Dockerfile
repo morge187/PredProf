@@ -7,13 +7,9 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# Явно говорим Flask CLI, что запускать
 ENV FLASK_APP="app:create_app"
-
-# Чтобы config точно получил URI (у вас Settings читает DATABASE_URL)
 ENV DATABASE_URL="sqlite:////app/canteen.db"
 
 EXPOSE 5000
 
-# Миграции при старте контейнера (рекомендуется)
-CMD sh -c "flask --app app:create_app db upgrade && python app/main.py"
+CMD sh -c "flask --app app:create_app db upgrade && flask --app app:create_app run --host=0.0.0.0 --port=5000"

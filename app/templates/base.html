@@ -1,38 +1,53 @@
 <!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <title>{{ title or "Школьная столовая" }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-  <header class="container">
-    <nav class="nav">
-      <a href="{{ url_for('index') }}">Главная</a>
-      {% if current_user.is_authenticated %}
-        <span class="muted">Пользователь: {{ current_user.username }} ({{ current_user.role }})</span>
-        <a href="{{ url_for('auth.logout') }}">Выйти</a>
-      {% else %}
-        <a href="{{ url_for('auth.login') }}">Войти</a>
-        <a href="{{ url_for('auth.register') }}">Регистрация</a>
-      {% endif %}
-    </nav>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title or "App" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="flash">
-          {% for category, message in messages %}
-            <div class="flash-{{ category }}">{{ message }}</div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
-  </header>
+  <body>
+    <header class="container">
+      <nav class="nav">
+        {# Главная: для гостя -> логин, для пользователя -> кабинет по роли #}
+        {% if current_user.is_authenticated %}
+          {% if current_user.role == "student" %}
+            <a href="{{ url_for('student.dashboard') }}">Главная</a>
+          {% elif current_user.role == "cook" %}
+            <a href="{{ url_for('cook.dashboard') }}">Главная</a>
+          {% elif current_user.role == "admin" %}
+            <a href="{{ url_for('admin.dashboard') }}">Главная</a>
+          {% else %}
+            <a href="{{ url_for('auth.login') }}">Главная</a>
+          {% endif %}
+        {% else %}
+          <a href="{{ url_for('auth.login') }}">Главная</a>
+        {% endif %}
 
-  <main class="container">
-    {% block content %}{% endblock %}
-  </main>
+        {% if current_user.is_authenticated %}
+          <span class="muted">{{ current_user.username }} ({{ current_user.role }})</span>
+          <a href="{{ url_for('auth.logout') }}">Выйти</a>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}">Войти</a>
+          <a href="{{ url_for('auth.register') }}">Регистрация</a>
+        {% endif %}
+      </nav>
 
-  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash">
+            {% for category, message in messages %}
+              <div class="flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </header>
+
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
 </html>
