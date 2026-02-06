@@ -1,25 +1,14 @@
 import os
+from datetime import timedelta
+
 
 class Settings:
-    DB_HOST = os.getenv("DB_HOST", "postgres")
-    DB_PORT = int(os.getenv("DB_PORT", 5432))
-    DB_NAME = os.getenv("DB_NAME", "antifraud_db")
-    DB_USER = os.getenv("DB_USER", "postgres")
-    DB_PASSWORD = os.getenv("DB_PASSWORD", "postgres")
-    
-    REDIS_HOST = os.getenv("REDIS_HOST", "redis")
-    REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-    
-    RANDOM_SECRET = os.getenv("RANDOM_SECRET", "your-secret-key-min-128-chars-your-secret-key-min-128-chars")
-    JWT_ALGORITHM = "HS256"
-    JWT_EXPIRE_HOURS = 1
-    
-    ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@example.com")
-    ADMIN_FULLNAME = os.getenv("ADMIN_FULLNAME", "Admin User")
-    ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "Admin123456")
-    
-    @property
-    def DATABASE_URL(self):
-        return f"postgresql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+    SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-change-me")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///canteen.db")
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-settings = Settings()
+    REMEMBER_COOKIE_DURATION = timedelta(days=14)
+    WTF_CSRF_TIME_LIMIT = None
+
+    # Демо-настройка: "платежи" помечаем как успешные в приложении
+    PAYMENT_DEMO_MODE = True

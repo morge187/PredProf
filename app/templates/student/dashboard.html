@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Ученик: кабинет</h2>
+  <div class="grid">
+    <a class="card" href="{{ url_for('student.menu') }}">Меню</a>
+    <a class="card" href="{{ url_for('student.pay_get') }}">Оплата</a>
+    <a class="card" href="{{ url_for('student.preferences_get') }}">Аллергии/предпочтения</a>
+    <a class="card" href="{{ url_for('student.feedback_get') }}">Отзывы</a>
+    <a class="card" href="{{ url_for('student.receive_get') }}">Отметка получения</a>
+  </div>
+
+  <h3>Сегодня: {{ today }}</h3>
+  {% if orders %}
+    <ul>
+      {% for o in orders %}
+        <li>{{ o.meal_type }}: received={{ 'да' if o.received_by_student_at else 'нет' }},
+            issued={{ 'да' if o.issued_by_cook_at else 'нет' }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">Нет записей на сегодня.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Меню на {{ selected_day }}</h2>
+  {% if items %}
+    <table>
+      <tr><th>Тип</th><th>Блюдо</th><th>Цена</th><th>Аллергены</th></tr>
+      {% for i in items %}
+        <tr>
+          <td>{{ i.meal_type }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.price_rub }} руб.</td>
+          <td>{{ i.allergens or '-' }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p class="muted">Меню на эту дату не задано.</p>
+  {% endif %}
+{% endblock %}

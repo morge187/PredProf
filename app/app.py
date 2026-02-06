@@ -1,8 +1,44 @@
-import os
-import sys
-from main import create_app
+from flask import Flask
+from flask_migrate import Migrate
+from flask_login import LoginManager
+from flask_wtf import CSRFProtect
 
-app = create_app()
+from settings import Settings
+from database import db
+from models import User
+from routes import register_blueprints
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.getenv("SERVER_PORT", 8080)), debug=True)
+
+login_manager = LoginManager()
+csrf = CSRFProtect()
+migrate = Migrate()
+
+
+def create_app():
+    app = Flask(__name__)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+    app.config.from_object(Settings)
+
+    db.init_app(app)
+    login_manager.init_app(app)
+    csrf.init_app(app)
+
+    login_manager.login_view = "auth.login"
+    login_manager.login_message = "Требуется авторизация."
+
+    register_blueprints(app)
+
+    with app.app_context():
+        db.create_all()
+
+    return app
+
+
+@login_manager.user_loader
+def load_user(user_id: str):
+    try:
+        return db.session.get(User, int(user_id))
+    except Exception:
+        return None

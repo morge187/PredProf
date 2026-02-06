@@ -1,14 +1,19 @@
-FROM python:3.12.1-alpine3.19
+FROM python:3.11-slim
 
 WORKDIR /app
 
-RUN apk add --no-cache curl
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-COPY ./requirements.txt requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
+COPY . .
 
-COPY ./ .
+# Явно говорим Flask CLI, что запускать
+ENV FLASK_APP="app:create_app"
 
-ENV SERVER_PORT=8080
+# Чтобы config точно получил URI (у вас Settings читает DATABASE_URL)
+ENV DATABASE_URL="sqlite:////app/canteen.db"
 
-CMD ["sh", "-c", "exec python3 -m flask run --host=0.0.0.0 --port=$SERVER_PORT"]
+EXPOSE 5000
+
+# Миграции при старте контейнера (рекомендуется)
+CMD sh -c "flask --app app:create_app db upgrade && python app/main.py"

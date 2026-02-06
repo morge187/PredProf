@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Заявки на закупку</h2>
+  <table>
+    <tr><th>ID</th><th>Статус</th><th>Создана</th><th>Комментарий</th></tr>
+    {% for r in reqs %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.created_at }}</td>
+        <td>{{ r.comment or "-" }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

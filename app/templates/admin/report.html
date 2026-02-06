@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Отчёт (CSV)</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <label>{{ form.start_date.label }} {{ form.start_date() }}</label>
+    <label>{{ form.end_date.label }} {{ form.end_date() }}</label>
+    <button class="btn" type="submit">Скачать CSV</button>
+  </form>
+{% endblock %}

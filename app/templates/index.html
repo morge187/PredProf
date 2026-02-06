@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>АИС школьного питания</h1>
+  {% if not current_user.is_authenticated %}
+    <p>Войдите или зарегистрируйтесь, чтобы перейти в свой кабинет.</p>
+  {% else %}
+    {% if current_user.role == "student" %}
+      <a class="btn" href="{{ url_for('student.dashboard') }}">Кабинет ученика</a>
+    {% elif current_user.role == "cook" %}
+      <a class="btn" href="{{ url_for('cook.dashboard') }}">Кабинет повара</a>
+    {% elif current_user.role == "admin" %}
+      <a class="btn" href="{{ url_for('admin.dashboard') }}">Кабинет администратора</a>
+    {% endif %}
+  {% endif %}
+{% endblock %}

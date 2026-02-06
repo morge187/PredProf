@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Новая заявка на закупку</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <label>{{ form.product_name.label }} {{ form.product_name() }}</label>
+    <label>{{ form.quantity.label }} {{ form.quantity() }}</label>
+    <label>{{ form.unit.label }} {{ form.unit() }}</label>
+    <button class="btn" type="submit">Создать</button>
+  </form>
+{% endblock %}

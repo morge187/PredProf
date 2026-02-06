@@ -1,53 +1,10 @@
-
+version: '3.8'
 services:
-  kitchen-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    networks: [isolated]
-    depends_on:
-      postgres:
-        condition: service_healthy
+  app:
+    build: .
     ports:
-      - "8080:8080"
-    environment:
-      - ADMIN_EMAIL=admin@mail.ru
-      - ADMIN_FULLNAME=Test Test
-      - ADMIN_PASSWORD=123123123aA!
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_NAME=testdb
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - RANDOM_SECRET=Jf/ZpZSxfMWnOexP48Mp1z200jd+8BVZ7ws6Uw5Jp/w=
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:8080/ping"]
-      interval: 5s
-      timeout: 2s
-      retries: 20
-      start_period: 10s
-  postgres:
-    image: postgres:16-alpine
-    networks: [isolated]
-    container_name: antifraud-postgres
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: testdb
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      - "5000:5000"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres -d testdb -h 127.0.0.1 -p 5432" ]
-      interval: 10s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
-networks:
-  isolated:
-    internal: false
-volumes:
-  postgres_data:
+      - .:/app
+    environment:
+      - FLASK_ENV=development

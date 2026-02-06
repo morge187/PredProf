@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Остатки</h2>
+
+  <h3>Обновить</h3>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <label>{{ form.kind.label }} {{ form.kind() }}</label>
+    <label>{{ form.name.label }} {{ form.name() }}</label>
+    <label>{{ form.quantity.label }} {{ form.quantity() }}</label>
+    <label>{{ form.unit.label }} {{ form.unit() }}</label>
+    <button class="btn" type="submit">Сохранить</button>
+  </form>
+
+  <h3>Продукты</h3>
+  <table>
+    <tr><th>Название</th><th>Кол-во</th><th>Ед.</th></tr>
+    {% for p in products %}
+      <tr><td>{{ p.name }}</td><td>{{ p.quantity }}</td><td>{{ p.unit }}</td></tr>
+    {% endfor %}
+  </table>
+
+  <h3>Готовые блюда</h3>
+  <table>
+    <tr><th>Блюдо</th><th>Порции</th></tr>
+    {% for d in dishes %}
+      <tr><td>{{ d.dish_name }}</td><td>{{ d.portions_available }}</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

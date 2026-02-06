@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Отметка получения (сегодня: {{ today }})</h2>
+  <form method="post" action="{{ url_for('student.receive_post') }}">
+    {{ form.hidden_tag() }}
+    <label>{{ form.meal_type.label }} {{ form.meal_type() }}</label>
+    <button class="btn" type="submit">Отметить получение</button>
+  </form>
+{% endblock %}

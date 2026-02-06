@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Оставить отзыв</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <label>{{ form.dish_name.label }} {{ form.dish_name() }}</label>
+    <label>{{ form.rating.label }} {{ form.rating() }}</label>
+    <label>{{ form.comment.label }} {{ form.comment(rows=4) }}</label>
+    <button class="btn" type="submit">Отправить</button>
+  </form>
+{% endblock %}

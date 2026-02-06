@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Администратор: кабинет</h2>
+  <div class="grid">
+    <a class="card" href="{{ url_for('admin.stats') }}">Статистика</a>
+    <a class="card" href="{{ url_for('admin.procurements') }}">Согласование закупок</a>
+    <a class="card" href="{{ url_for('admin.report_get') }}">Отчёт (CSV)</a>
+  </div>
+{% endblock %}

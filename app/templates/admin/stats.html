@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Статистика на {{ selected_day }}</h2>
+  <p>Сумма оплат: {{ payments_sum }} руб.</p>
+  <p>Посещаемость (учтенные выдачи): {{ visits }}</p>
+{% endblock %}

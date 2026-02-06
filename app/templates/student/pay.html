@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Оплата</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <label>{{ form.payment_type.label }} {{ form.payment_type() }}</label>
+    <label>{{ form.amount_rub.label }} {{ form.amount_rub() }}</label>
+    <button class="btn" type="submit">Оплатить (демо)</button>
+  </form>
+{% endblock %}

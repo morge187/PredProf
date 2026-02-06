@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Согласование заявок</h2>
+
+  <form method="post" action="{{ url_for('admin.procurements_decide') }}">
+    {{ form.hidden_tag() }}
+    <label>{{ form.request_id.label }} {{ form.request_id() }}</label>
+    <label>{{ form.decision.label }} {{ form.decision() }}</label>
+    <label>{{ form.comment.label }} {{ form.comment() }}</label>
+    <button class="btn" type="submit">Применить</button>
+  </form>
+
+  <table>
+    <tr><th>ID</th><th>Статус</th><th>Создана</th><th>Решение</th></tr>
+    {% for r in reqs %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.created_at }}</td>
+        <td>{{ r.comment or "-" }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

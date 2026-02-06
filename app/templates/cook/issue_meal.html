@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Учесть выдачу</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <label>{{ form.student_id.label }} {{ form.student_id() }}</label>
+    <label>{{ form.meal_type.label }} {{ form.meal_type() }}</label>
+    <button class="btn" type="submit">Подтвердить выдачу</button>
+  </form>
+{% endblock %}
