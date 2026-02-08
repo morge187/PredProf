@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2 align="center" class="heading">Вход</h2>
+  <h2 align="center">Вход</h2>
   <form method="post">
     {{ form.hidden_tag() }}
     <label>{{ form.username.label }} {{ form.username() }}</label>

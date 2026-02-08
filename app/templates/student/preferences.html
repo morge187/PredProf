@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Аллергии и предпочтения</h2>
+  <h2 align="center">Аллергии и предпочтения</h2>
   <form method="post">
     {{ form.hidden_tag() }}
     <label>{{ form.allergies.label }} {{ form.allergies(rows=4) }}</label>

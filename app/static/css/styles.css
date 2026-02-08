@@ -12,13 +12,23 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
-    background-size: cover;
-    overflow-x: hidden;}
-.container {/* Класс контейнера для центрирования содержимого */
+    background-size: cover;}
+.warm-text {
+    color: #fac489; /* Нежный персиковый */
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.7rem;
+    line-height: 1.7;
+    text-shadow: 
+        1px 1px 0 #8b0000,    /* Справа снизу */
+        -1px 1px 0 #8b0000,   /* Слева снизу */
+        1px -1px 0 #8b0000,   /* Справа сверху */
+        -1px -1px 0 #8b0000;  /* Слева сверху */}
+.container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1.5rem;}
-.nav {
+    padding: 0 1rem;
+    margin-bottom: 4rem;}
+.nav {/* Навигационная панель */
     display: flex;
     gap: 0.75rem;
     align-items: center;
@@ -30,19 +40,21 @@ body {
     position: sticky;
     top: 0;
     left: 0;
-    width: 100%; /* Оставляем 100% */
+    right: 0; /* Растягиваем на всю ширину */
     z-index: 1000;
     padding-left: 2rem;
     border-radius: 0 0 0.5rem 0.5rem;}
-.heading {
-    color: #990000;
+h2 {
+    color: #8b0000;
     font-weight: 900;
     font-size: 3rem;
     text-shadow: 
-        -3px -3px 0 #000,  /* лево-верх */
-        1px -1px 0 #000,   /* право-верх */
-        -1px 1px 0 #000,   /* лево-низ */
-        1px 1px 0 #000;    /* право-низ */}
+        -3px -3px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    margin: 2.5rem 0;       /* Внешние отступы */
+    padding: 1rem 0;        /* Внутренние отступы */}
 .muted {color: #a88b8e;}/* Приглушенный цвет текста */
 .btn {/* Стили для кнопок */
     display: inline-block;
@@ -51,8 +63,7 @@ body {
     color: #f5f5f5;
     text-decoration: none;
     border-radius: 0.5rem;
-    border: 1px solid rgba(107, 15, 26, 0.4);
-    cursor: pointer;}
+    border: 1px solid rgba(107, 15, 26, 0.4);}
 .card {/* Стили для карточек */
     display: inline-block;
     padding: 2rem;
@@ -63,8 +74,7 @@ body {
     color: #f5f5f5;
     border: 1px solid rgba(107, 15, 26, 0.4);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    font-size: 1.5rem; /* Увеличенный размер шрифта (примерно 18px) */
-    /* или можно использовать: font-size: 18px; */}
+    font-size: 1.5rem; /* Увеличенный размер шрифта (примерно 18px) */}
 label {/* Метки для полей ввода */
     display: block;
     margin: 0.75rem 0 0.25rem;}

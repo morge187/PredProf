@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Новая заявка на закупку</h2>
+  <h2 align="center">Новая заявка на закупку</h2>
   <form method="post">
     {{ form.hidden_tag() }}
     <label>{{ form.product_name.label }} {{ form.product_name() }}</label>

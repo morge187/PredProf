@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Оплата</h2>
+  <h2 align="center">Оплата</h2>
   <form method="post">
     {{ form.hidden_tag() }}
     <label>{{ form.payment_type.label }} {{ form.payment_type() }}</label>
