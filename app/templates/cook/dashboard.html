@@ -7,5 +7,5 @@
     <a class="card" href="{{ url_for('cook.procurement_new_get') }}">Новая заявка</a>
     <a class="card" href="{{ url_for('cook.procurements') }}">Заявки</a>
   </div>
-  <p>Сегодня {{ today }}, учтено выдач: {{ issued }}</p>
+  <p class="btn">Сегодня {{ today }}, учтено выдач: {{ issued }}</p>
 {% endblock %}

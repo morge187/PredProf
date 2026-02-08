@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Ученик: кабинет</h2>
+  <h2 class="heading">Ученик: кабинет</h2>
   <div class="grid">
     <a class="card" href="{{ url_for('student.menu') }}">Меню</a>
     <a class="card" href="{{ url_for('student.pay_get') }}">Оплата</a>
@@ -13,7 +13,7 @@
   {% if orders %}
     <ul>
       {% for o in orders %}
-        <li>{{ o.meal_type }}: received={{ 'да' if o.received_by_student_at else 'нет' }},
+        <li class="btn">{{ o.meal_type }}: received={{ 'да' if o.received_by_student_at else 'нет' }},
             issued={{ 'да' if o.issued_by_cook_at else 'нет' }}</li>
       {% endfor %}
     </ul>

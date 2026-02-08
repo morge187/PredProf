@@ -1,15 +1,136 @@
-body { font-family: Arial, sans-serif; margin: 0; background: #f7f7f9; color: #111; }
-.container { max-width: 980px; margin: 0 auto; padding: 16px; }
-.nav { display: flex; gap: 12px; align-items: center; }
-.muted { color: #666; }
-.btn { display: inline-block; padding: 8px 12px; background: #1f6feb; color: white; text-decoration: none; border-radius: 6px; border: 0; cursor: pointer; }
-.card { display: inline-block; padding: 14px; background: white; border-radius: 10px; text-decoration: none; color: #111; box-shadow: 0 1px 6px rgba(0,0,0,.08); }
-.grid { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
-label { display: block; margin: 10px 0; }
-input, select, textarea { width: 100%; max-width: 520px; padding: 8px; }
-table { width: 100%; border-collapse: collapse; background: white; }
-th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-.flash > div { padding: 10px; margin: 8px 0; border-radius: 8px; background: #fff; }
-.flash-success { border: 1px solid #3fb950; }
-.flash-warning { border: 1px solid #d29922; }
-.flash-danger { border: 1px solid #f85149; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: #be7373;
+    line-height: 1.6;
+    margin: 0;
+    min-height: 100vh;
+    background-image: url('/static/images/fon.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    overflow-x: hidden;}
+.container {/* Класс контейнера для центрирования содержимого */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;}
+.nav {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    background-color: rgb(83, 2, 12);
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%; /* Оставляем 100% */
+    z-index: 1000;
+    padding-left: 2rem;
+    border-radius: 0 0 0.5rem 0.5rem;}
+.heading {
+    color: #990000;
+    font-weight: 900;
+    font-size: 3rem;
+    text-shadow: 
+        -3px -3px 0 #000,  /* лево-верх */
+        1px -1px 0 #000,   /* право-верх */
+        -1px 1px 0 #000,   /* лево-низ */
+        1px 1px 0 #000;    /* право-низ */}
+.muted {color: #a88b8e;}/* Приглушенный цвет текста */
+.btn {/* Стили для кнопок */
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #6b0f1a;
+    color: #f5f5f5;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(107, 15, 26, 0.4);
+    cursor: pointer;}
+.card {/* Стили для карточек */
+    display: inline-block;
+    padding: 2rem;
+    margin: 1rem;
+    background-color: #1a0b0d;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: #f5f5f5;
+    border: 1px solid rgba(107, 15, 26, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    font-size: 1.5rem; /* Увеличенный размер шрифта (примерно 18px) */
+    /* или можно использовать: font-size: 18px; */}
+label {/* Метки для полей ввода */
+    display: block;
+    margin: 0.75rem 0 0.25rem;}
+input, select, textarea {/* Поля ввода, выбора и текстовые области */
+    width: 100%;
+    max-width: 520px;
+    padding: 0.5rem 0.75rem;
+    background-color: #1a0b0d;
+    border: 1px solid rgba(107, 15, 26, 0.3);
+    border-radius: 0.375rem;
+    color: #f5f5f5;}
+table {/* Таблицы */
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1a0b0d;}
+th, td {/* Ячейки таблицы */
+    border: 1px solid rgba(107, 15, 26, 0.4);
+    padding: 0.75rem 1rem;
+    text-align: left;}
+.flash > div {/* Контейнер для всплывающих сообщений */
+    padding: 0.75rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 0.5rem;
+    background-color: #1a0b0d;
+    border: 1px solid;}
+.flash-success {/* Успешные сообщения */
+    border-color: #3fb950;
+    background-color: rgba(63, 185, 80, 0.1);}
+.flash-warning {/* Предупреждающие сообщения */
+    border-color: #d29922;
+    background-color: rgba(210, 153, 34, 0.1);}
+.flash-danger {/* Сообщения об ошибках */
+    border-color: #f85149;
+    background-color: rgba(248, 81, 73, 0.1);}
+main.container form {/* Стили для форм в основном контенте (регистрация, вход) */
+    max-width: 520px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #1a0b0d;
+    border: 1px solid rgba(107, 15, 26, 0.4);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);}
+/* Стили для контейнера "Запомнить меня" */
+.remember-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: #1a0b0d;
+    border: 1px solid rgba(107, 15, 26, 0.3);
+    border-radius: 0.375rem;
+    margin: 0.75rem 0;
+    max-width: 520px;
+    width: 100%;}
+.remember-container input[type="checkbox"] {/* Стили для чекбокса в контейнере */
+    width: auto;
+    max-width: none;
+    margin: 0;}
+.remember-container label {/* Стили для текста в контейнере */
+    display: inline;
+    margin: 0;
+    cursor: pointer;}
+.remember-container > label {/*Убираем стандартные стили для label внутри remember-container*/
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+    margin: 0;}
