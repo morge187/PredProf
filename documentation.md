@@ -430,15 +430,6 @@ docker-compose down
 
 ---
 
-## 13. Контакты и поддержка
-
-Для вопросов и предложений:
-- Email: [support@schoolcanteen.ru](mailto:support@schoolcanteen.ru)
-- GitHub Issues: [https://github.com/your-org/school-canteen/issues](https://github.com/your-org/school-canteen/issues)
-- Документация: [https://docs.schoolcanteen.ru](https://docs.schoolcanteen.ru)
-
----
-
 **Версия документации**: 1.0  
 **Последнее обновление**: 06.02.2026  
 **Автор**: Командный кейс № 2 "Управление столовой" (Московская предпрофессиональная олимпиада)
